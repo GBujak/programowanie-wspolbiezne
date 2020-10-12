@@ -67,10 +67,13 @@ class Rect {
 
 public class Zadanie1 {
     public static void main(String[] args) {
-        final Rect rect = new Rect(10, 20, 10, 20, 0);
+        Rect rect = new Rect(10, 20, 10, 20, 0);
         System.out.println("initial: " + rect);
-        System.out.println("rotated: " + rect.rotatedRight());
-        System.out.println("moved:   " + rect.rotatedRight().moved(10, 10));
-        System.out.println("resized: " + rect.rotatedRight().moved(10, 10).resized(100, 100));
+        rect = rect.rotatedRight();
+        System.out.println("rotated: " + rect);
+        rect = rect.moved(10, 10);
+        System.out.println("moved:   " + rect);
+        rect = rect.resized(100, 100);
+        System.out.println("resized: " + rect);
     }
 }
