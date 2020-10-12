@@ -9,29 +9,17 @@ class MySynchronizedSet<T> implements Set<T> {
 
     // Niezaimplementowane metody interfejsu Set
 
-    @Override
     public Spliterator<T> spliterator() { throw new IllegalStateException("unimplemented"); }
-    @Override
     public int size() { throw new IllegalStateException("unimplemented"); }
-    @Override
     public boolean isEmpty() { throw new IllegalStateException("unimplemented"); }
-    @Override
     public Iterator<T> iterator() { throw new IllegalStateException("unimplemented"); }
-    @Override
     public Object[] toArray() { throw new IllegalStateException("unimplemented"); }
-    @Override
     public <T1> T1[] toArray(T1[] t1s) { throw new IllegalStateException("unimplemented"); }
-    @Override
     public boolean remove(Object o) { throw new IllegalStateException("unimplemented"); }
-    @Override
     public boolean containsAll(Collection<?> collection) { throw new IllegalStateException("unimplemented"); }
-    @Override
     public boolean addAll(Collection<? extends T> collection) { throw new IllegalStateException("unimplemented"); }
-    @Override
     public boolean retainAll(Collection<?> collection) { throw new IllegalStateException("unimplemented"); }
-    @Override
     public boolean removeAll(Collection<?> collection) { throw new IllegalStateException("unimplemented"); }
-    @Override
     public void clear() { throw new IllegalStateException("unimplemented"); }
 
     @Override
