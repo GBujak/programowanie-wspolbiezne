@@ -33,7 +33,7 @@ class MySynchronizedSet<T> implements Set<T> {
     }
 
     @Override
-    public String toString() {
+    public synchronized String toString() {
         return set.toString();
     }
 }
