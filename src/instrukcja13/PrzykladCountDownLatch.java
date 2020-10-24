@@ -14,8 +14,15 @@ class ConcurrentMapper<T, R> {
     public ConcurrentMapper(Function<T, R> function, List<T> arguments) {
         this.function = function;
         this.arguments = arguments;
+
         this.results = new ArrayList<>(arguments.size());
+
+        // Po to dodaje null żeby potem móc wywołać results.set(index, i) w dowolnej kolejności.
+        //
+        // Mimo tego, że konstruktor dostaje początkowy rozmiar n, nie możnaby bez dodania null n razy
+        // ustawiać wartości pod dowolnym indeksem < n bo spowodowałoby to wyjątek "out of bounds"
         for (int i = 0; i < arguments.size(); i++) results.add(null);
+
         this.latch = new CountDownLatch(arguments.size());
     }
 
