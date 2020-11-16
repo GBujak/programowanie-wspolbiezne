@@ -2,10 +2,7 @@ package instrukcja15;
 
 import java.io.File;
 import java.security.cert.CollectionCertStoreParameters;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinTask;
 import java.util.concurrent.RecursiveTask;
@@ -96,7 +93,10 @@ public class PrzykladyForkJoin {
         var filesize = forkJoinPool.invoke(new ForkJoinDiskUsage(new File(".")));
         System.out.println("Filesize: " + filesize / 1_000 + "KB");
 
-        var inputList = new ArrayList<>(List.of(245, 2, 567, 12, 568, 1234, 4356, 12, 3453));
+        var random = new Random();
+        var inputList = new ArrayList<Integer>();
+        for (int i = 0; i < 20; i++) inputList.add(random.nextInt(100));
+
         var sorted = forkJoinPool.invoke(new ForkJoinTableSort(inputList));
         System.out.println("Sorted: " + sorted);
     }
