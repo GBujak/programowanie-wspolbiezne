@@ -1,11 +1,5 @@
 package instrukcja15;
 
-import javax.xml.stream.events.EntityReference;
-import java.nio.file.Path;
-import java.time.Duration;
-import java.time.Instant;
-import java.util.ArrayDeque;
-import java.util.Queue;
 import java.util.concurrent.*;
 
 abstract class MyBaseActiveObject {
@@ -46,6 +40,34 @@ class WindaActiveObject extends MyBaseActiveObject {
     }
 }
 
+class DrukarkaSynchronized {
+    public static final int printTime = 2;
+    public synchronized int print() {
+        try {
+            TimeUnit.SECONDS.sleep(printTime);
+            return 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+}
+
+class DrukarkaActiveObject extends MyBaseActiveObject {
+    public static final int printTime = 2;
+    public Future<Integer> print() {
+        return submit(() -> {
+            try {
+                TimeUnit.SECONDS.sleep(printTime);
+                return 0;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return -1;
+        });
+    }
+}
+
 public class PrzykladyActiveObject {
     public static void main(String[] args) {
         var windaSynchronized = new WindaSynchronized();
@@ -75,6 +97,36 @@ public class PrzykladyActiveObject {
         try {
             TimeUnit.SECONDS.sleep(5);
             windaActive.shutdown();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        var drukarkaSynchronized = new DrukarkaSynchronized();
+
+        for (int i = 0; i < 5; i++) {
+            new Thread(() -> {
+                drukarkaSynchronized.print();
+                System.out.println("DrukarkaSynchronized wydrukowała");
+            }).start();
+        }
+
+        var drukarkaActive = new DrukarkaActiveObject();
+
+        for (int i = 0; i < 5; i++) {
+            var floor = i;
+            new Thread(() -> {
+                try {
+                    drukarkaActive.print().get();
+                    System.out.println("DrukarkaActiveObject wydrukowała");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }).start();
+        }
+
+        try {
+            TimeUnit.SECONDS.sleep(5);
+            drukarkaActive.shutdown();
         } catch (Exception e) {
             e.printStackTrace();
         }
